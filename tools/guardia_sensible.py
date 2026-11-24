@@ -44,6 +44,11 @@ PNG_STRIPPED = PNG_FLAGGED | {b"tIME"}
 # CLI flag or env var may extend it. Matched exactly (no folding) and only as a
 # whole host name.
 ALLOWED_LITERALS = ()
+# Characters that continue a host name for the whole-host check in strip_allowed.
+# "@" is not a host-name character: it is here so that "user@<allowed host>" is
+# not blanked as the allowed host, and the private term list still sees that host
+# inside an e-mail address. (The e-mail pattern itself runs before strip_allowed
+# and does not depend on this.) Do not remove it.
 HOST_CHARS = "._@-"
 
 GENERIC = [

@@ -48,18 +48,17 @@ jobs:
       - name: Guardia de contenido sensible
         run: python3 -I tools/guardia_sensible.py --excluir .git .
 
-  deploy:
+  # Upload and deploy run in separate jobs: deploy-pages can start before an
+  # artifact uploaded in its own job is visible ("No artifacts named
+  # github-pages"), and re-running only the deploy job reuses the one artifact.
+  build:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: check
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
       contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      pages: read
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -71,5 +70,17 @@ jobs:
         with:
           path: pauta-personal
 
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - id: deployment
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
