@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0b5d5b">
+  <title>Mi despensa · Mi pauta de alimentación</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Mi pauta">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="registro.css">
+  <link rel="stylesheet" href="despensa.css">
+</head>
+<body class="despensa">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-plate" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></symbol>
+    <symbol id="i-note" viewBox="0 0 24 24"><path d="M5 3.5h10l4 4V20.5H5z"/><path d="M14.5 3.5V8H19M8.5 12h7M8.5 16h5"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3.5 11L12 4l8.5 7"/><path d="M6 9.5V20h12V9.5"/></symbol>
+    <symbol id="i-basket" viewBox="0 0 24 24"><path d="M3.5 10h17l-1.8 9.5H5.3z"/><path d="M8 10l3-6M16 10l-3-6M9 14v2.5M15 14v2.5"/></symbol>
+    <symbol id="i-speaker" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  </svg>
+
+  <a class="skip" href="#contenido">Ir al contenido</a>
+
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="index.html"><svg class="i" aria-hidden="true"><use href="#i-plate"/></svg>Mi pauta</a>
+      <nav class="switch" aria-label="Páginas">
+        <a href="index.html"><svg class="i" aria-hidden="true"><use href="#i-book"/></svg>Pauta</a>
+        <a href="registro.html"><svg class="i" aria-hidden="true"><use href="#i-note"/></svg>Anotaciones</a>
+      </nav>
+      <div class="size" role="group" aria-label="Tamaño de la letra">
+        <button type="button" id="smaller" aria-label="Letra más chica">A−</button>
+        <button type="button" id="bigger" aria-label="Letra más grande">A+</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido" class="wrap" tabindex="-1">
+    <div class="sections">
+      <section id="despensa" aria-labelledby="t-despensa">
+        <nav class="crumbs" aria-label="Estás en"><ol><li><a href="index.html#inicio"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg>Mi pauta</a></li><li><span aria-current="page">Mi despensa</span></li></ol></nav>
+        <div class="sec-head">
+          <h1 id="t-despensa" tabindex="-1">Mi despensa</h1>
+        </div>
+        <p class="intro">Lo que hay en casa, ordenado con la tabla de tu pauta. Se guarda solo en este teléfono.</p>
+        <p class="ejemplo">EJEMPLO: esta es una pauta de ejemplo. Reemplázala por la que te entregue tu equipo tratante.</p>
+        <button type="button" class="btn guia-abrir" data-guia-abrir hidden>¿Cómo se usa?</button>
+
+        <noscript><p class="card measure">Para anotar la despensa hay que activar JavaScript. La tabla <a href="index.html#elegir">Qué elegir</a> funciona sin él.</p></noscript>
+
+        <div id="avisos" class="errors measure" role="alert" aria-live="assertive"></div>
+
+        <nav class="jump" aria-label="En esta página">
+          <ul>
+            <li><a href="#f-despensa">Agregar</a></li>
+            <li><a href="#en-casa">Lo que hay en casa</a></li>
+            <li><a href="#para-comprar"><svg class="i" aria-hidden="true"><use href="#i-basket"/></svg>Para comprar</a></li>
+          </ul>
+        </nav>
+
+        <div class="two">
+          <!-- Add or change one item -->
+          <form id="f-despensa" class="card form" novalidate aria-labelledby="h-f-despensa" tabindex="-1">
+            <h2 id="h-f-despensa">Agregar a mi despensa</h2>
+
+            <div id="paso-buscar">
+              <div class="field">
+                <label for="buscar">Busca en tu pauta o escribe un alimento</label>
+                <input id="buscar" type="text" autocomplete="off" autocapitalize="off" enterkeyhint="search" aria-describedby="ayuda-buscar" aria-controls="resultados">
+              </div>
+              <p id="ayuda-buscar" class="small">Si lo eliges de la lista de tu pauta, queda en su grupo con las mismas palabras de la pauta. Lo que escribas y no esté en la pauta queda aparte, tal como lo escribiste.</p>
+              <div id="resultados" class="options"></div>
+              <p id="estado-busqueda" class="sr" role="status" aria-live="polite"></p>
+              <details class="tabla">
+                <summary>Ver toda la tabla de tu pauta</summary>
+                <div id="tabla-completa"></div>
+              </details>
+            </div>
+
+            <div id="paso-detalle" hidden>
+              <p id="origen" class="lbl"></p>
+              <p id="elegido" class="chosen"></p>
+              <div id="campo-nombre" class="field" hidden>
+                <label for="nombre">Nombre</label>
+                <input id="nombre" name="name" type="text" autocomplete="off" aria-describedby="e-despensa">
+              </div>
+              <div class="field">
+                <label for="cantidad">Cantidad (si quieres)</label>
+                <input id="cantidad" name="quantity" type="text" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="nota">Nota (si quieres)</label>
+                <textarea id="nota" name="note" rows="2"></textarea>
+              </div>
+              <div id="e-despensa" class="errors" role="alert" aria-live="assertive"></div>
+              <div class="actions">
+                <button type="submit" id="guardar" class="btn primary">Guardar en mi despensa</button>
+                <button type="button" id="volver-buscar" class="btn">Elegir otro</button>
+              </div>
+            </div>
+          </form>
+
+          <div class="pantry">
+            <!-- Every change is announced here; removing offers «Deshacer». -->
+            <div id="cambios" class="changes" hidden>
+              <p id="estado" role="status" aria-live="polite"></p>
+              <button type="button" id="deshacer" class="btn" hidden>Deshacer</button>
+            </div>
+
+            <section id="en-casa" aria-labelledby="t-en-casa">
+              <h2 id="t-en-casa" class="list-h" tabindex="-1">Lo que hay en casa</h2>
+
+              <div id="b-preferir" class="block pref">
+                <div class="block-head">
+                  <h3>Preferir</h3>
+                  <button type="button" class="speak" data-target="b-preferir"><svg class="i" aria-hidden="true"><use href="#i-speaker"/></svg><span>Escuchar</span></button>
+                </div>
+                <div id="lista-preferir" class="entries"></div>
+              </div>
+
+              <div id="b-limitar" class="block lim">
+                <div class="block-head">
+                  <h3>Limitar o evitar</h3>
+                  <button type="button" class="speak" data-target="b-limitar"><svg class="i" aria-hidden="true"><use href="#i-speaker"/></svg><span>Escuchar</span></button>
+                </div>
+                <div id="lista-limitar" class="entries"></div>
+              </div>
+
+              <div id="b-otros" class="block otros">
+                <div class="block-head">
+                  <h3>Otros (no aparece en tu pauta)</h3>
+                  <button type="button" class="speak" data-target="b-otros"><svg class="i" aria-hidden="true"><use href="#i-speaker"/></svg><span>Escuchar</span></button>
+                </div>
+                <div id="lista-otros" class="entries"></div>
+              </div>
+            </section>
+
+            <section id="para-comprar" aria-labelledby="t-comprar">
+              <div class="block-head">
+                <h2 id="t-comprar" class="list-h" tabindex="-1">Para comprar</h2>
+                <button type="button" class="speak" data-target="para-comprar"><svg class="i" aria-hidden="true"><use href="#i-speaker"/></svg><span>Escuchar</span></button>
+              </div>
+              <ul id="lista-comprar" class="shop"></ul>
+            </section>
+          </div>
+        </div>
+
+        <nav class="pager" aria-label="Seguir">
+          <a href="index.html#elegir"><svg class="i" aria-hidden="true"><use href="#i-left"/></svg><span><span class="k">Tu pauta</span> <span class="n">Qué elegir</span></span></a>
+          <a class="home" href="index.html#inicio"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg><span class="k">Volver al inicio</span></a>
+        </nav>
+        <p class="foot small">Esta lista solo ordena lo que hay en casa con la tabla de tu pauta. No reemplaza las indicaciones de tu nutricionista.</p>
+      </section>
+    </div>
+  </main>
+
+  <!-- S26: first-use guide. guia.js fills it from guia-core.js; without it nothing shows. -->
+  <dialog id="guia" class="guia" data-guia="despensa" aria-labelledby="guia-titulo">
+    <div class="guia-top">
+      <p id="guia-paso" class="guia-paso"></p>
+      <button type="button" class="btn guia-saltar" data-guia="saltar">Saltar</button>
+    </div>
+    <div id="guia-texto" class="guia-texto" tabindex="0" role="region" aria-labelledby="guia-titulo">
+      <h2 id="guia-titulo" tabindex="-1"></h2>
+      <div id="guia-cuerpo"></div>
+    </div>
+    <div class="guia-acciones">
+      <button type="button" class="speak" data-target="guia-texto"><svg class="i" aria-hidden="true"><use href="#i-speaker"/></svg><span>Escuchar</span></button>
+      <button type="button" class="btn" data-guia="anterior">Anterior</button>
+      <button type="button" class="btn primary" data-guia="siguiente">Siguiente</button>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+  <script type="module" src="despensa.js"></script>
+  <script type="module" src="guia.js"></script>
+</body>
+</html>

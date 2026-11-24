@@ -1,0 +1,696 @@
+/* Mi pauta: shared styles for index.html and registro.html.
+   Mobile first; no fixed widths. */
+
+:root {
+  --bg: #fbf8f2;
+  --card: #ffffff;
+  --ink: #161616;
+  --muted: #3d3d3d;
+  --accent: #0b5d5b;
+  --accent-ink: #ffffff;
+  --line: #c9c2b4;
+  --focus: #b34700;
+  --focus-on-accent: #ffd28a;
+  --scale: 1;
+
+  --r-card: .9rem;
+  --r-ctl: .6rem;
+  --r-field: .5rem;
+  --r-pill: 2rem;
+  --tap: max(48px, 2.75rem);
+  --measure: 65ch;
+  --gut: clamp(14px, 4.5vw, 48px);
+  --pad: clamp(.8rem, .55rem + 1.2vw, 1.25rem);
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+/* Base text 18-19 px, multiplied by the A-/A+ step. */
+html {
+  font-size: calc(clamp(18px, 17.2px + .25vw, 19px) * var(--scale));
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.55;
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection { background: var(--accent); color: var(--accent-ink); }
+:focus-visible { outline: 4px solid var(--focus); outline-offset: 3px; }
+[tabindex="-1"]:focus:not(:focus-visible) { outline: none; }
+
+h1, h2, h3, h4, h5 { text-wrap: balance; overflow-wrap: break-word; }
+p, li, dd { text-wrap: pretty; overflow-wrap: break-word; }
+p { margin: 0 0 .7rem; }
+
+svg.i {
+  width: 1.25em;
+  height: 1.25em;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 70rem;
+  margin-inline: auto;
+  padding-inline: max(var(--gut), env(safe-area-inset-left)) max(var(--gut), env(safe-area-inset-right));
+}
+
+.skip { position: absolute; left: -999px; }
+.skip:focus {
+  left: 1rem;
+  top: 1rem;
+  z-index: 30;
+  background: var(--card);
+  padding: .5rem 1rem;
+}
+
+/* ------------------------------------------------------------------ Header */
+
+/* The header grows at half the A+ step so it never eats the screen; its
+   controls are sized in em from this font size. */
+.top {
+  --tap: max(48px, 2.6em);
+  font-size: calc(clamp(18px, 17.2px + .25vw, 19px) * (1 + (var(--scale) - 1) * .5));
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding-top: env(safe-area-inset-top);
+}
+.top :focus-visible { outline-color: var(--focus-on-accent); }
+.top .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .4rem .75rem;
+  padding-block: .55rem;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  min-height: var(--tap);
+  margin-right: auto;
+  color: inherit;
+  font-weight: 800;
+  font-size: clamp(1.05em, .95em + .5vw, 1.3em);
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.brand svg.i { width: 1.35em; height: 1.35em; }
+
+/* Mi pauta | Mis anotaciones */
+.switch {
+  order: 3;
+  flex: 1 1 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem;
+  padding: .2em;
+  border: 2px solid rgb(255 255 255 / .55);
+  border-radius: calc(var(--r-ctl) + .25rem);
+}
+.switch a {
+  flex: 1 1 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  min-height: var(--tap);
+  padding: .3em .8em;
+  border-radius: var(--r-ctl);
+  color: var(--accent-ink);
+  font-weight: 700;
+  font-size: .92em;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+}
+.switch a[aria-current="page"] { background: var(--card); color: var(--accent); }
+@media (hover: hover) {
+  .switch a:not([aria-current]):hover { text-decoration: underline; text-underline-offset: .2em; }
+}
+
+@media (max-width: 419px) {
+  .switch svg.i { display: none; }
+}
+
+.size { order: 2; display: flex; gap: .4em; }
+.size button {
+  min-width: max(48px, 2.4em);
+  min-height: max(48px, 2.4em);
+  padding: 0 .45em;
+  font: inherit;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+  border: 2px solid var(--accent-ink);
+  border-radius: var(--r-ctl);
+  background: transparent;
+  color: var(--accent-ink);
+  cursor: pointer;
+}
+.size button:disabled { border-style: dashed; cursor: default; }
+
+@media (min-width: 640px) {
+  .switch { order: 2; flex: 0 1 auto; }
+  .size { order: 3; }
+}
+
+/* ---------------------------------------------------------------- Layout */
+
+main {
+  flex: 1 0 auto;
+  padding-top: clamp(1rem, .6rem + 2vw, 2.2rem);
+  padding-bottom: calc(3rem + env(safe-area-inset-bottom));
+}
+
+/* Hub */
+.hello { margin-bottom: 1.4rem; }
+.hello h1 {
+  margin: 0 0 .35rem;
+  font-size: max(1.1rem, min(clamp(1.6rem, 1.1rem + 2.4vw, 2.6rem), 9.5vw));
+  line-height: 1.12;
+  letter-spacing: -.015em;
+}
+.hello p { margin: 0; max-width: var(--measure); color: var(--muted); font-size: 1.05rem; }
+
+.group-h {
+  margin: 2rem 0 .8rem;
+  font-size: clamp(1.15rem, 1rem + .7vw, 1.45rem);
+  line-height: 1.25;
+}
+.hello + .group-h, .next + .group-h { margin-top: 0; }
+
+.tiles {
+  container: tiles / inline-size;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: .8rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 13.5rem), 1fr));
+}
+/* The whole tile is the link: the anchor keeps its plain label and a
+   pseudo-element stretches its hit area over the tile. */
+.tile {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "ico" "name" "desc";
+  align-content: start;
+  row-gap: .15rem;
+  height: 100%;
+  padding: var(--pad);
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: var(--r-card);
+  transition: border-color .15s ease-out, transform .2s cubic-bezier(.2, .7, .2, 1);
+}
+.tile .ico {
+  grid-area: ico;
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  margin-bottom: .55rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.tile .ico svg.i { width: 1.35rem; height: 1.35rem; }
+.tile a {
+  grid-area: name;
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 1.1rem;
+  line-height: 1.25;
+  text-decoration: none;
+}
+.tile a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.tile a:focus-visible { outline: none; }
+.tile a:focus-visible::after { outline: 4px solid var(--focus); outline-offset: 3px; }
+.tile .d {
+  grid-area: desc;
+  margin: 0;
+  color: var(--muted);
+  font-size: .9rem;
+  line-height: 1.35;
+}
+.tile .go { grid-area: go; display: none; color: var(--accent); }
+.tile:active { background: var(--bg); }
+@media (hover: hover) {
+  .tile:hover { border-color: var(--accent); transform: translateY(-2px); }
+}
+/* One column of tiles at normal text size: a compact row with a chevron.
+   With very large text on a narrow phone the card layout above stays. */
+@container tiles (min-width: 16rem) and (max-width: 27.7rem) {
+  .tile {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: "ico name go" "ico desc go";
+    column-gap: .85rem;
+    row-gap: .1rem;
+    align-content: center;
+    padding: .8rem var(--pad);
+  }
+  .tile .ico { margin: 0; align-self: center; }
+  .tile a { align-self: end; }
+  .tile .d { align-self: start; }
+  .tile .go { display: block; align-self: center; }
+}
+
+.next {
+  max-width: 46rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: .2rem .9rem;
+  align-items: start;
+  margin: 0 0 2rem;
+  padding: var(--pad);
+  background: var(--card);
+  border: 3px solid var(--accent);
+  border-radius: var(--r-card);
+}
+.next > svg.i { width: 2.1rem; height: 2.1rem; color: var(--accent); grid-row: span 4; }
+.next h2 { margin: 0; font-size: 1rem; color: var(--muted); }
+.next p { margin: 0; font-weight: 700; }
+.next a { justify-self: start; }
+
+/* Inline links in running text: the hit area grows without moving the line. */
+.card a, .note a, .banner a, .next a, .intro a {
+  color: var(--accent);
+  font-weight: 700;
+  text-underline-offset: .2em;
+  padding-block: .7em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* One section per screen. Without router.js everything shows in order. */
+.screen { display: grid; gap: 2rem; grid-template-columns: minmax(0, 1fr); }
+.sections { container: sections / inline-size; }
+html.routed[data-view="section"] .hub,
+html.routed:not([data-view="section"]) .screen,
+html.routed section[data-route]:not(.current) { display: none; }
+html:not(.routed) section[data-route] + section[data-route] { margin-top: 2.5rem; }
+.siblings { display: none; }
+
+@keyframes enter {
+  from { opacity: .35; transform: translateY(.4rem); }
+}
+html.routed section[data-route].current,
+html.routed[data-view="hub"] .hub { animation: enter .28s cubic-bezier(.16, 1, .3, 1); }
+
+@media (min-width: 1000px) {
+  html.routed .screen { grid-template-columns: minmax(0, 1fr) 13.5rem; gap: 2.5rem; }
+  html.routed .siblings {
+    display: block;
+    position: sticky;
+    top: 1rem;
+    align-self: start;
+    padding: .9rem .6rem;
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: var(--r-card);
+  }
+}
+.siblings h2 { margin: 0 .5rem .3rem; font-size: .9rem; color: var(--muted); }
+.siblings h2 ~ h2 { margin-top: 1rem; }
+.siblings ul { list-style: none; margin: 0; padding: 0; }
+.siblings a {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  min-height: var(--tap);
+  padding: .25rem .6rem;
+  border-radius: var(--r-field);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: .95rem;
+  line-height: 1.25;
+  text-decoration: none;
+}
+.siblings a:hover { text-decoration: underline; text-underline-offset: .2em; }
+.siblings a[aria-current="page"] { background: var(--accent); color: var(--accent-ink); }
+
+/* Breadcrumbs */
+.crumbs ol {
+  list-style: none;
+  margin: 0 0 .4rem;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.crumbs li { display: flex; align-items: center; }
+.crumbs li + li::before {
+  content: "";
+  width: .45rem;
+  height: .45rem;
+  margin: 0 .55rem 0 .35rem;
+  border-right: 2px solid var(--muted);
+  border-top: 2px solid var(--muted);
+  transform: rotate(45deg);
+}
+.crumbs a {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  min-height: var(--tap);
+  color: var(--accent);
+  font-weight: 700;
+  text-underline-offset: .2em;
+}
+.crumbs [aria-current] { color: var(--muted); font-weight: 700; }
+/* Narrow screen or large text: only the way back, as « ‹ Mis anotaciones ». */
+@container sections (max-width: 30rem) {
+  .crumbs li:not(:nth-last-child(2)) { display: none; }
+  .crumbs li:nth-last-child(2)::before { transform: rotate(-135deg); margin: 0 .35rem 0 .55rem; }
+}
+
+/* Section heading row */
+.sec-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .6rem 1rem;
+  margin: 0 0 1.1rem;
+}
+.sec-head h2 {
+  margin: 0;
+  font-size: max(1.1rem, min(clamp(1.45rem, 1.05rem + 2vw, 2.2rem), 8.5vw));
+  line-height: 1.15;
+  letter-spacing: -.01em;
+}
+h3 { margin: 0 0 .35rem; font-size: 1.12rem; line-height: 1.3; }
+
+.measure, .intro { max-width: var(--measure); }
+.intro { margin: 0 0 1.1rem; }
+
+/* Escuchar and buttons */
+.speak, .btn {
+  font: inherit;
+  font-weight: 700;
+  display: inline-flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: .2rem .45rem;
+  min-height: var(--tap);
+  padding: .4rem 1rem;
+  border: 2px solid var(--accent);
+  border-radius: var(--r-ctl);
+  background: var(--card);
+  color: var(--accent);
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color .15s ease-out, color .15s ease-out;
+}
+.speak { font-size: .95rem; }
+.speak[aria-pressed="true"], .btn.primary { background: var(--accent); color: var(--accent-ink); }
+@media (hover: hover) {
+  .btn:not(.primary):hover, .speak:not([aria-pressed="true"]):hover { background: var(--bg); }
+}
+
+/* Cards */
+.card {
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: var(--r-card);
+  padding: var(--pad);
+  margin: 0 0 .9rem;
+}
+.card > :last-child { margin-bottom: 0; }
+.objetivo { border: 3px solid var(--accent); }
+
+/* S23: the discharge indication, quoted as written. Neutral, no status colour. */
+.alta .fecha { color: var(--muted); font-size: .95rem; font-weight: 700; }
+.alta blockquote {
+  margin: 0 0 .9rem;
+  padding: .15rem 0 .15rem .9rem;
+  border-left: 4px solid var(--line);
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.alta blockquote p { margin: 0; }
+
+/* Lists of indications: one card, rows with a ring marker. */
+.items {
+  list-style: none;
+  margin: 0;
+  padding: .2rem var(--pad);
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: var(--r-card);
+}
+.items li { position: relative; padding: .8rem 0 .8rem 2.1rem; }
+.items li + li { border-top: 2px solid var(--line); }
+.items li::before {
+  content: "";
+  position: absolute;
+  left: .15rem;
+  top: 1.15rem;
+  width: 1rem;
+  height: 1rem;
+  border: 3px solid var(--accent);
+  border-radius: 50%;
+}
+.items li.key::before { border-color: var(--ink); background: var(--ink); }
+
+/* Wider screens: cards side by side, text keeps its measure inside each. */
+.grid {
+  display: grid;
+  gap: .9rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  align-items: start;
+}
+.grid > .card { margin: 0; }
+
+/* Preferir / Limitar o evitar: named by word and icon, never by color alone. */
+.groups { display: grid; gap: .9rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); }
+.group {
+  margin: 0;
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: var(--r-card);
+  overflow: hidden;
+}
+.group h3 { margin: 0; padding: .7rem var(--pad); border-bottom: 2px solid var(--line); }
+.half { padding: .7rem var(--pad) .8rem; }
+.half + .half { border-top: 2px dashed var(--muted); }
+.half p { margin: 0; }
+.tag {
+  display: inline-flex !important;
+  align-items: center;
+  gap: .4rem;
+  margin: 0 0 .2rem !important;
+  font-weight: 800;
+  font-size: .92rem;
+}
+.pref .tag { color: var(--accent); }
+.lim .tag { color: var(--muted); }
+
+.lbl { margin: .3rem 0 .15rem; font-size: .9rem; font-weight: 800; color: var(--muted); }
+.quotes, .tips ul { margin: .2rem 0 .6rem; padding-left: 1.2rem; }
+.quotes li, .tips li { margin-bottom: .45rem; }
+.tips { border-style: dashed; border-color: var(--muted); }
+.steps { list-style: none; margin: 0 0 1rem; padding: 0; }
+.small { font-size: .9rem; color: var(--muted); }
+
+/* Pager: Anterior, Siguiente and Volver al inicio */
+.pager {
+  display: grid;
+  gap: .7rem;
+  margin: 2.2rem 0 0;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+}
+.pager a {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  min-height: 4rem;
+  padding: .6rem var(--pad);
+  border: 2px solid var(--accent);
+  border-radius: var(--r-card);
+  background: var(--card);
+  color: var(--accent);
+  font-weight: 800;
+  line-height: 1.25;
+  text-decoration: none;
+}
+.pager .k { display: block; }
+.pager .n { display: block; color: var(--muted); font-weight: 600; font-size: .88rem; }
+.pager .next-link { justify-content: space-between; text-align: right; }
+.pager .next-link > span { margin-left: auto; }
+.pager .home { grid-column: 1 / -1; background: var(--accent); color: var(--accent-ink); }
+@media (hover: hover) {
+  .pager a:not(.home):hover { background: var(--bg); }
+}
+
+.note {
+  margin: 2.5rem 0 1rem;
+  max-width: 46rem;
+  padding: var(--pad);
+  border: 2px dashed var(--muted);
+  border-radius: var(--r-card);
+}
+.note > :last-child { margin-bottom: 0; }
+.foot { margin: 2.5rem 0 0; max-width: var(--measure); }
+
+details.install {
+  max-width: 46rem;
+  padding: 0 var(--pad);
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: var(--r-card);
+}
+details.install summary {
+  min-height: var(--tap);
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  cursor: pointer;
+}
+details.install[open] { padding-bottom: .4rem; }
+
+/* ------------------------------------------------- First-use guide (S26) */
+
+/* A native modal dialog. Text in rem, so A−/A+ applies; nothing under 1rem. */
+.btn.guia-abrir { margin: 0 0 1.1rem; font-size: 1rem; }
+.hello .guia-abrir { margin: .9rem 0 0; }
+
+.guia {
+  width: min(100% - 24px, 36rem);
+  max-width: none;
+  max-height: calc(100% - 24px);
+  max-height: calc(100dvh - 24px);
+  margin: auto;
+  padding: 0;
+  border: 3px solid var(--accent);
+  border-radius: var(--r-card);
+  background: var(--card);
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+/* L50: a column where only the text scrolls. The top row and the button row
+   («Escuchar», «Anterior», «Siguiente») always stay inside the dialog, even with
+   A+ at its largest on a small phone. Only when open: a closed dialog stays hidden. */
+.guia[open] {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: guia-in .22s cubic-bezier(.16, 1, .3, 1);
+}
+.guia::backdrop { background: rgb(22 22 22 / .62); }
+html:has(.guia[open]) { overflow: hidden; }
+@keyframes guia-in {
+  from { opacity: 0; transform: translateY(.6rem); }
+}
+.guia-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem 1rem;
+  padding: .7rem var(--pad) 0;
+  flex: none;
+}
+.guia-paso { margin: 0; font-weight: 700; color: var(--muted); }
+.guia-saltar { margin-left: auto; }
+.guia-texto {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: .5rem var(--pad) .3rem;
+}
+/* The dialog clips outside its edges: draw the ring inside the text area. */
+.guia-texto:focus-visible {
+  outline-offset: -4px;
+}
+/* .despensa h2 (despensa.css) is more specific than .guia-texto h2; keep the dialog heading the same on every page. */
+.guia-texto h2,
+.despensa .guia-texto h2 {
+  margin: 0 0 .6rem;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.guia-texto p { margin: 0 0 .7rem; }
+.guia-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  padding: .8rem var(--pad) var(--pad);
+  border-top: 2px solid var(--line);
+  flex: none;
+}
+/* registro.css makes .btn smaller on its pages; the guide keeps 1rem everywhere. */
+.guia .btn, .guia .speak { font-size: 1rem; }
+.guia-acciones .speak { margin-right: auto; }
+.guia-acciones [data-guia] { flex: 1 1 auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  .guia[open] { animation: none; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  .tile:hover { transform: none; }
+}
+
+/* Print: the whole pauta, in order, without controls. */
+@media print {
+  html { font-size: 12pt; }
+  body { display: block; min-height: 0; }
+  .top, .skip, .tiles, .group-h, .crumbs, .pager, .siblings, .speak, .install, .foot, .guia, .guia-abrir { display: none !important; }
+  body.pauta .hub,
+  body.pauta .screen,
+  body.pauta section[data-route] { display: block !important; animation: none !important; }
+  body.pauta section[data-route] { margin-top: 1.5rem; }
+  .card, .group, .items li, .steps li { break-inside: avoid; }
+  .groups, .grid { display: block; }
+  .group { margin-bottom: .6rem; }
+  .note { margin-top: 0; }
+}
+
+/* Sample pauta marker. Remove it with every <p class="ejemplo"> line (see README.md). */
+.ejemplo {
+  max-width: var(--measure);
+  margin: 0 0 1rem;
+  padding: .7rem var(--pad);
+  border: 3px dashed var(--focus);
+  border-radius: var(--r-card);
+  background: #fff4e5;
+  color: var(--ink);
+  font-weight: 700;
+}

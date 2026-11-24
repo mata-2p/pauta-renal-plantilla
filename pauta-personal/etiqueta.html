@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#0b5d5b">
+  <title>Leer una etiqueta · Mi pauta de alimentación</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Mi pauta">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="registro.css">
+  <link rel="stylesheet" href="etiqueta.css">
+</head>
+<body class="etiqueta">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-plate" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></symbol>
+    <symbol id="i-note" viewBox="0 0 24 24"><path d="M5 3.5h10l4 4V20.5H5z"/><path d="M14.5 3.5V8H19M8.5 12h7M8.5 16h5"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3.5 11L12 4l8.5 7"/><path d="M6 9.5V20h12V9.5"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M3.5 8.5h3.5l1.8-2.5h6.4l1.8 2.5h3.5V19h-17z"/><circle cx="12" cy="13.2" r="3.4"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="9" cy="9.5" r="1.6"/><path d="M4 17.5l5-5 4 4 2.5-2.5 4.5 4.5"/></symbol>
+    <symbol id="i-speaker" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  </svg>
+
+  <a class="skip" href="#contenido">Ir al contenido</a>
+
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="index.html"><svg class="i" aria-hidden="true"><use href="#i-plate"/></svg>Mi pauta</a>
+      <nav class="switch" aria-label="Páginas">
+        <a href="index.html"><svg class="i" aria-hidden="true"><use href="#i-book"/></svg>Pauta</a>
+        <a href="registro.html"><svg class="i" aria-hidden="true"><use href="#i-note"/></svg>Anotaciones</a>
+      </nav>
+      <div class="size" role="group" aria-label="Tamaño de la letra">
+        <button type="button" id="smaller" aria-label="Letra más chica">A−</button>
+        <button type="button" id="bigger" aria-label="Letra más grande">A+</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido" class="wrap" tabindex="-1">
+    <section id="leer" class="solo" aria-labelledby="t-leer">
+      <nav class="crumbs" aria-label="Estás en"><ol><li><a href="index.html#inicio"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg>Mi pauta</a></li><li><span aria-current="page">Leer una etiqueta</span></li></ol></nav>
+      <div class="sec-head">
+        <h1 id="t-leer" tabindex="-1">Leer una etiqueta</h1>
+      </div>
+      <p class="intro">Saca una foto de la etiqueta de un alimento envasado. Lo que se lea aparece para que lo revises con el envase.</p>
+      <button type="button" class="btn guia-abrir" data-guia-abrir hidden>¿Cómo se usa?</button>
+
+      <noscript><p class="card measure">Para leer una etiqueta con una foto hay que activar JavaScript. La guía <a href="index.html#etiquetas">Cómo leer las etiquetas</a> funciona sin él.</p></noscript>
+
+      <!-- Without a reader address (READER_URL in etiqueta-core.js) this is all the page shows. -->
+      <div id="no-configurado" class="card measure" hidden>
+        <h2 id="t-no-configurado">El lector de etiquetas no está configurado</h2>
+        <p>Esta copia de Mi pauta no tiene la dirección de un lector de etiquetas, así que no envía ninguna foto.</p>
+        <p>Para revisar un envase, usa la guía <a href="index.html#etiquetas">Cómo leer las etiquetas</a>.</p>
+      </div>
+
+      <!-- 1. Short notice, once -->
+      <div id="paso-aviso" class="card aviso measure" hidden>
+        <h2 id="t-aviso" tabindex="-1">Antes de la primera foto</h2>
+        <ul class="plain">
+          <li>La foto que eliges sale del teléfono sin metadatos y pasa por Cloudflare y OpenRouter hasta un modelo de Google, fuera de Chile. Se usa solo para leer la etiqueta y no se guarda.</li>
+          <li>Fotografía solo el envase. No incluyas personas ni documentos.</li>
+          <li>Lo que se lea puede tener errores: revísalo siempre con el envase.</li>
+        </ul>
+        <div class="actions">
+          <button type="button" id="entendido" class="btn primary">Entendido</button>
+        </div>
+      </div>
+
+      <!-- 2. The photo -->
+      <div id="paso-foto" class="foto" hidden>
+        <div class="card measure">
+          <h2 id="t-foto" tabindex="-1">La foto</h2>
+          <p>De cerca y con buena luz: los sellos negros, la tabla nutricional o la lista de ingredientes.</p>
+          <div class="actions">
+            <input id="foto-camara" class="file" type="file" accept="image/*" capture="environment">
+            <label for="foto-camara" class="btn primary"><svg class="i" aria-hidden="true"><use href="#i-camera"/></svg>Sacar una foto</label>
+            <input id="foto-galeria" class="file" type="file" accept="image/*">
+            <label for="foto-galeria" class="btn"><svg class="i" aria-hidden="true"><use href="#i-image"/></svg>Elegir de la galería</label>
+          </div>
+          <p class="small">La foto se envía sin datos de ubicación y no se guarda. <button type="button" id="ver-aviso" class="linkish">Ver el aviso otra vez</button></p>
+        </div>
+
+        <figure id="vista" class="card vista" hidden>
+          <canvas id="lienzo" width="0" height="0" role="img" aria-label="La foto que elegiste"></canvas>
+          <figcaption class="small">Revisa que se vea la etiqueta antes de enviarla.</figcaption>
+          <div class="actions">
+            <button type="button" id="enviar" class="btn primary">Leer esta etiqueta</button>
+          </div>
+        </figure>
+      </div>
+
+      <p id="estado" class="status" role="status"></p>
+      <div id="error" class="errors measure" role="alert"></div>
+
+      <!-- 3. What was read, to confirm or correct -->
+      <form id="f-confirmar" class="card form confirmar" novalidate aria-labelledby="t-confirmar" hidden>
+        <h2 id="t-confirmar" tabindex="-1">Esto es lo que se leyó. Revísalo con el envase.</h2>
+        <p>Cambia lo que no coincida con el envase. Si algo no se ve en el envase, elige «No se pudo leer».</p>
+
+        <fieldset class="choices">
+          <legend>Sello «ALTO EN SODIO»</legend>
+          <p id="leido-alto_en_sodio" class="leido"></p>
+          <input id="s-sodio-si" name="alto_en_sodio" type="radio" value="sí" aria-describedby="leido-alto_en_sodio"><label for="s-sodio-si">Sí</label>
+          <input id="s-sodio-no" name="alto_en_sodio" type="radio" value="no" aria-describedby="leido-alto_en_sodio"><label for="s-sodio-no">No</label>
+          <input id="s-sodio-nl" name="alto_en_sodio" type="radio" value="no se pudo leer" aria-describedby="leido-alto_en_sodio"><label for="s-sodio-nl">No se pudo leer</label>
+        </fieldset>
+        <fieldset class="choices">
+          <legend>Sello «ALTO EN AZÚCARES»</legend>
+          <input id="s-azucares-si" name="alto_en_azucares" type="radio" value="sí"><label for="s-azucares-si">Sí</label>
+          <input id="s-azucares-no" name="alto_en_azucares" type="radio" value="no"><label for="s-azucares-no">No</label>
+          <input id="s-azucares-nl" name="alto_en_azucares" type="radio" value="no se pudo leer"><label for="s-azucares-nl">No se pudo leer</label>
+        </fieldset>
+        <fieldset class="choices">
+          <legend>Sello «ALTO EN GRASAS SATURADAS»</legend>
+          <input id="s-grasas-si" name="alto_en_grasas_saturadas" type="radio" value="sí"><label for="s-grasas-si">Sí</label>
+          <input id="s-grasas-no" name="alto_en_grasas_saturadas" type="radio" value="no"><label for="s-grasas-no">No</label>
+          <input id="s-grasas-nl" name="alto_en_grasas_saturadas" type="radio" value="no se pudo leer"><label for="s-grasas-nl">No se pudo leer</label>
+        </fieldset>
+        <fieldset class="choices">
+          <legend>Sello «ALTO EN CALORÍAS»</legend>
+          <input id="s-calorias-si" name="alto_en_calorias" type="radio" value="sí"><label for="s-calorias-si">Sí</label>
+          <input id="s-calorias-no" name="alto_en_calorias" type="radio" value="no"><label for="s-calorias-no">No</label>
+          <input id="s-calorias-nl" name="alto_en_calorias" type="radio" value="no se pudo leer"><label for="s-calorias-nl">No se pudo leer</label>
+        </fieldset>
+        <fieldset class="choices">
+          <legend>¿Los ingredientes dicen «cloruro de potasio»?</legend>
+          <p id="leido-cloruro_de_potasio" class="leido"></p>
+          <input id="s-potasio-si" name="cloruro_de_potasio" type="radio" value="sí" aria-describedby="leido-cloruro_de_potasio"><label for="s-potasio-si">Sí</label>
+          <input id="s-potasio-no" name="cloruro_de_potasio" type="radio" value="no" aria-describedby="leido-cloruro_de_potasio"><label for="s-potasio-no">No</label>
+          <input id="s-potasio-nl" name="cloruro_de_potasio" type="radio" value="no se pudo leer" aria-describedby="leido-cloruro_de_potasio"><label for="s-potasio-nl">No se pudo leer</label>
+        </fieldset>
+        <fieldset class="choices">
+          <legend>¿El frente del envase dice «sal light» o «+ potasio»?</legend>
+          <p id="leido-dice_sal_light" class="leido"></p>
+          <input id="s-light-si" name="dice_sal_light" type="radio" value="sí" aria-describedby="leido-dice_sal_light"><label for="s-light-si">Sí</label>
+          <input id="s-light-no" name="dice_sal_light" type="radio" value="no" aria-describedby="leido-dice_sal_light"><label for="s-light-no">No</label>
+          <input id="s-light-nl" name="dice_sal_light" type="radio" value="no se pudo leer" aria-describedby="leido-dice_sal_light"><label for="s-light-nl">No se pudo leer</label>
+        </fieldset>
+        <fieldset class="choices categorias">
+          <legend>¿El envase tiene escrito uno de estos tipos de producto?</legend>
+          <p id="ayuda-categoria" class="small">Elige uno solo si esas palabras están escritas en el envase. Si no, elige «Ninguna de estas».</p>
+          <p id="leido-categoria_impresa" class="leido"></p>
+          <input id="c-cecinas" name="categoria_impresa" type="radio" value="cecinas" aria-describedby="ayuda-categoria leido-categoria_impresa"><label for="c-cecinas">Cecinas</label>
+          <input id="c-vienesas" name="categoria_impresa" type="radio" value="vienesas" aria-describedby="ayuda-categoria leido-categoria_impresa"><label for="c-vienesas">Vienesas</label>
+          <input id="c-hamburguesas" name="categoria_impresa" type="radio" value="hamburguesas procesadas" aria-describedby="ayuda-categoria leido-categoria_impresa"><label for="c-hamburguesas">Hamburguesas procesadas</label>
+          <input id="c-nuggets" name="categoria_impresa" type="radio" value="nuggets" aria-describedby="ayuda-categoria leido-categoria_impresa"><label for="c-nuggets">Nuggets</label>
+          <input id="c-caldos" name="categoria_impresa" type="radio" value="caldos en cubo" aria-describedby="ayuda-categoria leido-categoria_impresa"><label for="c-caldos">Caldos en cubo</label>
+          <input id="c-sopas" name="categoria_impresa" type="radio" value="sopas instantáneas" aria-describedby="ayuda-categoria leido-categoria_impresa"><label for="c-sopas">Sopas instantáneas</label>
+          <input id="c-snacks" name="categoria_impresa" type="radio" value="snacks salados" aria-describedby="ayuda-categoria leido-categoria_impresa"><label for="c-snacks">Snacks salados</label>
+          <input id="c-conservas" name="categoria_impresa" type="radio" value="conservas" aria-describedby="ayuda-categoria leido-categoria_impresa"><label for="c-conservas">Conservas</label>
+          <input id="c-salsas" name="categoria_impresa" type="radio" value="salsas comerciales" aria-describedby="ayuda-categoria leido-categoria_impresa"><label for="c-salsas">Salsas comerciales</label>
+          <input id="c-ninguna" name="categoria_impresa" type="radio" value="ninguna" aria-describedby="ayuda-categoria leido-categoria_impresa"><label for="c-ninguna">Ninguna de estas</label>
+          <input id="c-nl" name="categoria_impresa" type="radio" value="no se pudo leer" aria-describedby="ayuda-categoria leido-categoria_impresa"><label for="c-nl">No se pudo leer</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Sodio en la tabla nutricional, en miligramos</legend>
+          <p class="small">Escribe el número entero, sin decimales. Déjalo vacío si no se pudo leer.</p>
+          <div class="pair">
+            <div class="field">
+              <label for="sodio-100">Por 100 gramos o 100 mililitros</label>
+              <input id="sodio-100" class="num" name="sodio_mg_100" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" aria-describedby="eco-sodio-100">
+              <p id="eco-sodio-100" class="eco"></p>
+            </div>
+            <div class="field">
+              <label for="sodio-porcion">Por porción</label>
+              <input id="sodio-porcion" class="num" name="sodio_mg_porcion" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" aria-describedby="eco-sodio-porcion">
+              <p id="eco-sodio-porcion" class="eco"></p>
+            </div>
+          </div>
+        </fieldset>
+
+        <p id="h-confirmar" class="small">Para confirmar, toca tu respuesta en el sello «ALTO EN SODIO», en «cloruro de potasio», en «sal light» y en el tipo de producto.</p>
+        <div id="e-confirmar" class="errors" role="alert"></div>
+        <div class="actions">
+          <button type="submit" class="btn primary" aria-describedby="h-confirmar">Confirmo lo que veo en el envase</button>
+          <button type="button" id="otra-foto" class="btn">Usar otra foto</button>
+        </div>
+      </form>
+
+      <!-- 4. After confirmation: what was confirmed and only the pauta's own words -->
+      <div id="paso-resultado" class="resultado" hidden>
+        <div class="sec-head">
+          <h2 id="t-resultado" tabindex="-1">Lo que confirmaste</h2>
+          <button type="button" class="speak" data-target="resultado"><svg class="i" aria-hidden="true"><use href="#i-speaker"/></svg><span>Escuchar</span></button>
+        </div>
+        <div id="resultado">
+          <div class="card measure">
+            <h3 class="sr">Lo que confirmaste</h3>
+            <ul id="confirmado" class="plain confirmado"></ul>
+          </div>
+          <div id="pauta-card" class="card measure pauta-dice">
+            <h3>Lo que dice tu pauta</h3>
+            <div id="frases"></div>
+          </div>
+          <div id="revisar-card" class="card measure revisar" hidden>
+            <h3>Para revisar en el envase</h3>
+            <div id="revisar"></div>
+          </div>
+          <p class="small measure">Nada de esto se guarda: al salir de esta página se borra.</p>
+        </div>
+        <div class="actions">
+          <button type="button" id="corregir" class="btn">Corregir lo que confirmé</button>
+          <button type="button" id="otra-etiqueta" class="btn primary">Leer otra etiqueta</button>
+        </div>
+      </div>
+
+      <nav class="pager" aria-label="Seguir">
+        <a href="index.html#etiquetas"><svg class="i" aria-hidden="true"><use href="#i-left"/></svg><span><span class="k">Guía</span> <span class="n">Cómo leer las etiquetas</span></span></a>
+        <a class="home" href="index.html#inicio"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg><span class="k">Volver al inicio</span></a>
+      </nav>
+      <p class="foot small">Esta página ayuda a leer la etiqueta. No reemplaza las indicaciones de tu nutricionista.</p>
+    </section>
+  </main>
+
+  <!-- S26: first-use guide. guia.js fills it from guia-core.js; without it nothing shows. -->
+  <dialog id="guia" class="guia" data-guia="etiqueta" aria-labelledby="guia-titulo">
+    <div class="guia-top">
+      <p id="guia-paso" class="guia-paso"></p>
+      <button type="button" class="btn guia-saltar" data-guia="saltar">Saltar</button>
+    </div>
+    <div id="guia-texto" class="guia-texto" tabindex="0" role="region" aria-labelledby="guia-titulo">
+      <h2 id="guia-titulo" tabindex="-1"></h2>
+      <div id="guia-cuerpo"></div>
+    </div>
+    <div class="guia-acciones">
+      <button type="button" class="speak" data-target="guia-texto"><svg class="i" aria-hidden="true"><use href="#i-speaker"/></svg><span>Escuchar</span></button>
+      <button type="button" class="btn" data-guia="anterior">Anterior</button>
+      <button type="button" class="btn primary" data-guia="siguiente">Siguiente</button>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+  <script type="module" src="etiqueta.js"></script>
+  <script type="module" src="guia.js"></script>
+</body>
+</html>

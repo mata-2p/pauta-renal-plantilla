@@ -1,0 +1,127 @@
+/* Leer una etiqueta. Builds on styles.css and the form styles of registro.css.
+   Nothing here colors an answer: every answer looks the same, whatever it is. */
+
+.solo { max-width: 46rem; }
+.sec-head h1 {
+  margin: 0;
+  font-size: max(1.1rem, min(clamp(1.45rem, 1.05rem + 2vw, 2.2rem), 8.5vw));
+  line-height: 1.15;
+  letter-spacing: -.01em;
+}
+.sec-head h2 { font-size: clamp(1.2rem, 1.05rem + .8vw, 1.5rem); }
+.solo h2 { margin: 0 0 .6rem; font-size: clamp(1.15rem, 1rem + .7vw, 1.45rem); line-height: 1.25; }
+.solo .sec-head h2 { margin: 0; }
+
+.aviso { border: 3px solid var(--accent); }
+.aviso .plain li { margin-bottom: .6rem; }
+.foto .actions { margin-top: .6rem; }
+.btn svg.i { width: 1.2em; height: 1.2em; }
+
+/* A button that reads as a link, with a full-size target. */
+.linkish {
+  font: inherit;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: .2em;
+  cursor: pointer;
+}
+
+/* The photo as it will be sent. */
+.vista { margin: 0 0 .9rem; }
+.vista canvas {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: min(60vh, 28rem);
+  margin: 0 0 .6rem;
+  border-radius: var(--r-field);
+  border: 2px solid var(--line);
+  background: var(--bg);
+}
+
+/* Calm loading state: one softly pulsing dot next to the words. */
+#estado { max-width: var(--measure); }
+#estado.busy {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  padding: .8rem 1rem;
+  margin: 0 0 .9rem;
+  border: 2px solid var(--line);
+  border-radius: var(--r-ctl);
+  background: var(--card);
+}
+#estado.busy::before {
+  content: "";
+  flex: none;
+  width: .9rem;
+  height: .9rem;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: calma 1.6s ease-in-out infinite;
+}
+@keyframes calma {
+  50% { opacity: .3; transform: scale(.75); }
+}
+#error:not(:empty) { margin-bottom: .9rem; }
+/* Links in the error and the result: a full 48 px target, on their own words. */
+#error a, #frases a, #revisar a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  padding-block: 0;
+  color: var(--accent);
+  font-weight: 700;
+  text-underline-offset: .2em;
+}
+#error p:last-child { margin-bottom: 0; font-weight: 400; }
+
+/* Confirmation form */
+.confirmar { max-width: 46rem; }
+.confirmar > p { max-width: var(--measure); }
+.confirmar .choices { margin-bottom: 1.1rem; }
+.confirmar input.num { max-width: 10rem; }
+.confirmar fieldset > .small { margin: 0 0 .5rem; }
+/* What the reader saw, next to the two answers the person must choose. */
+.leido { width: 100%; margin: 0 0 .2rem; color: var(--muted); font-weight: 700; }
+.leido:empty { display: none; }
+/* S24: the help line of the product type sits on its own row, above the choices. */
+.choices > .small { width: 100%; margin: 0 0 .2rem; }
+/* A long label («Hamburguesas procesadas») may wrap on a narrow phone, never overflow. */
+.categorias label { max-width: 100%; overflow-wrap: anywhere; }
+/* Repeats the whole mg that will be kept; an error reads as an error by its words and a heavier border. */
+.eco { margin: 0; min-height: 1.5em; color: var(--muted); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.eco.bad { color: var(--ink); font-weight: 700; padding: .3rem .6rem; border: 3px solid var(--ink); border-radius: var(--r-field); }
+.pair > .field { flex-basis: 11rem; }
+
+/* Result: what was confirmed, then the pauta's own words. */
+.confirmado li { margin-bottom: .35rem; overflow-wrap: anywhere; }
+.pauta-dice { border: 3px solid var(--accent); }
+.revisar { border: 3px dashed var(--muted); }
+#revisar p:last-child { margin-bottom: 0; }
+.cita + .cita { margin-top: 1rem; padding-top: 1rem; border-top: 2px solid var(--line); }
+.cita blockquote { margin: 0 0 .2rem; padding: 0 0 0 .9rem; border-left: 4px solid var(--accent); }
+.cita blockquote p { margin: 0; font-size: 1.08rem; font-weight: 700; }
+.resultado > .actions { margin-top: .4rem; }
+
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media print {
+  body.etiqueta .aviso, body.etiqueta .foto, body.etiqueta .resultado > .actions,
+  body.etiqueta #estado, body.etiqueta .confirmar .actions { display: none !important; }
+}
