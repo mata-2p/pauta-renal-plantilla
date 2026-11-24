@@ -1,0 +1,31 @@
+# Lector de etiquetas (Cloudflare Worker). Antes de desplegar, cambia ALLOWED_ORIGIN
+# por la dirección de tu GitHub Pages. Si cambias `name`, cambia también la dirección
+# en pauta-personal/etiqueta-core.js (READER_URL).
+name = "lector-etiquetas"
+main = "src/index.js"
+compatibility_date = "2026-03-01"
+# Sin account_id: wrangler usa la cuenta de tu sesión (`npx wrangler@4 login`).
+
+# Solo la dirección workers.dev. Sin rutas ni dominios propios.
+workers_dev = true
+preview_urls = false
+
+[vars]
+# Solo el origen de tu página, sin barra final ni ruta.
+ALLOWED_ORIGIN = "https://tu-usuario.github.io"
+
+# La foto y la respuesta del modelo nunca se registran; los logs quedan apagados.
+[observability]
+enabled = false
+
+# 10 lecturas cada 60 s por IP (CF-Connecting-IP).
+[[ratelimits]]
+name = "RATE_LIMITER"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 10
+  period = 60
+
+# Los secretos NO van aquí. La clave se carga en tu terminal con:
+#   npx wrangler@4 secret put OPENROUTER_API_KEY

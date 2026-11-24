@@ -1,0 +1,9 @@
+{
+  "name": "lector-etiquetas",
+  "private": true,
+  "type": "module",
+  "description": "Cloudflare Worker that only reads Chilean food labels (seals, potassium chloride, sodium).",
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\""
+  }
+}
