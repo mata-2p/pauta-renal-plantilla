@@ -1,0 +1,10 @@
+.DS_Store
+__pycache__/
+*.pyc
+node_modules/
+.wrangler/
+.dev.vars
+.dev.vars.*
+.env
+# Tu lista privada de términos para la guardia: nunca en el repo.
+terminos-prohibidos.txt

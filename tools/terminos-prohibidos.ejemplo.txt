@@ -1,0 +1,23 @@
+# Formato de la lista privada de términos para tools/guardia_sensible.py.
+#
+# NO pongas tus términos en este archivo ni en ningún archivo del repo: el repo es
+# público. Copia este archivo FUERA del repo (por ejemplo ~/mi-lista.txt), escribe
+# ahí tus términos y corre la guardia antes de cada push:
+#
+#   python3 -I tools/guardia_sensible.py --terminos ~/mi-lista.txt --excluir .git .
+#
+# Reglas:
+# - un término por línea; las líneas que empiezan con "#" son comentarios;
+# - no distingue mayúsculas ni tildes;
+# - busca la palabra completa, salvo que el término empiece o termine con "*":
+#   entonces basta como parte de una palabra ("*marca*" detecta "MiMarcaSpA").
+#
+# Qué conviene poner (en tu copia, sin el "#" del principio):
+# - el nombre y los apellidos de la persona y de quien la cuida;
+# - el nombre del lugar donde se atiende y de su equipo tratante;
+# - tu usuario y tu correo personal;
+# - la ciudad o la comuna, si no quieres que aparezcan.
+#
+# nombre-de-la-persona
+# apellido-de-la-persona
+# *nombre-del-lugar-donde-se-atiende*
